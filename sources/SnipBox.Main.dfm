@@ -31,9 +31,6 @@ object MainForm: TMainForm
     Align = alLeft
     Indent = 19
     TabOrder = 0
-    ExplicitLeft = 251
-    ExplicitTop = 0
-    ExplicitHeight = 457
   end
   object RichEdit: TRichEdit
     Left = 196
@@ -43,8 +40,8 @@ object MainForm: TMainForm
     Align = alClient
     Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
+    Font.Height = -15
+    Font.Name = 'Courier New'
     Font.Style = []
     ParentFont = False
     PlainText = True

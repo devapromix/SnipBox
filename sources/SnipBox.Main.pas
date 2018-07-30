@@ -33,6 +33,7 @@ uses SnipBox.New;
 
 procedure TMainForm.ToolButton1Click(Sender: TObject);
 begin
+  //NewForm.edSnipLanguage.ItemIndex := 0;
   NewForm.ShowModal;
 end;
 
