@@ -4,13 +4,17 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
+  System.ImageList, Vcl.ImgList, Vcl.ToolWin;
 
 type
   TMainForm = class(TForm)
     TreeView: TTreeView;
     RichEdit: TRichEdit;
     Splitter: TSplitter;
+    ToolBar: TToolBar;
+    ToolButton1: TToolButton;
+    ImageList: TImageList;
   private
     { Private declarations }
   public
