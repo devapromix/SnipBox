@@ -1,0 +1,2 @@
+# SnipBox
+Simple snippet manager.
