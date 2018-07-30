@@ -69,6 +69,7 @@ object MainForm: TMainForm
       Top = 0
       Caption = 'ToolButton1'
       ImageIndex = 0
+      OnClick = ToolButton1Click
     end
   end
   object ImageList: TImageList

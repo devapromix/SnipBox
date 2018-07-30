@@ -15,6 +15,7 @@ type
     ToolBar: TToolBar;
     ToolButton1: TToolButton;
     ImageList: TImageList;
+    procedure ToolButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -27,5 +28,12 @@ var
 implementation
 
 {$R *.dfm}
+
+uses SnipBox.New;
+
+procedure TMainForm.ToolButton1Click(Sender: TObject);
+begin
+  NewForm.ShowModal;
+end;
 
 end.
