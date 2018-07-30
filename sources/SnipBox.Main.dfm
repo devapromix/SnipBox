@@ -47,6 +47,7 @@ object MainForm: TMainForm
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    PlainText = True
     ReadOnly = True
     ScrollBars = ssBoth
     TabOrder = 1
