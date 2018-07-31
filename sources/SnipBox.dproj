@@ -105,10 +105,11 @@
             <Form>MainForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="SnipBox.New.pas">
-            <Form>NewForm</Form>
+        <DCCReference Include="SnipBox.Snip.pas">
+            <Form>SnipForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="SnipBox.Util.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

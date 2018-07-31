@@ -1,4 +1,4 @@
-unit SnipBox.Main;
+﻿unit SnipBox.Main;
 
 interface
 
@@ -16,6 +16,7 @@ type
     ToolButton1: TToolButton;
     ImageList: TImageList;
     procedure ToolButton1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,12 +30,20 @@ implementation
 
 {$R *.dfm}
 
-uses SnipBox.New;
+uses SnipBox.Snip, SnipBox.Util;
+
+procedure TMainForm.FormCreate(Sender: TObject);
+begin
+  Randomize;
+  ForceDirectories(Util.GetPath('resources'));
+  ForceDirectories(Util.GetPath('resources/snippets'));
+end;
 
 procedure TMainForm.ToolButton1Click(Sender: TObject);
 begin
-  //NewForm.edSnipLanguage.ItemIndex := 0;
-  NewForm.ShowModal;
+  SnipForm.edSnipLanguage.ItemIndex := 0;
+  SnipForm.edSnipCategory.ItemIndex := 0;
+  Util.ShowForm(SnipForm);
 end;
 
 end.
