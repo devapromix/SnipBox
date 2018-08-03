@@ -46,10 +46,13 @@ object MainForm: TMainForm
     Font.Style = []
     ParentFont = False
     PlainText = True
+    PopupMenu = PopupMenu1
     ReadOnly = True
     ScrollBars = ssBoth
     TabOrder = 1
     Zoom = 100
+    ExplicitLeft = 199
+    ExplicitTop = 34
   end
   object ToolBar: TToolBar
     Left = 0
@@ -74,5 +77,35 @@ object MainForm: TMainForm
   object ImageList: TImageList
     Left = 240
     Top = 80
+  end
+  object ActionList1: TActionList
+    Left = 304
+    Top = 80
+    object EditCopy1: TEditCopy
+      Category = 'Edit'
+      Caption = '&Copy'
+      Hint = 'Copy|Copies the selection and puts it on the Clipboard'
+      ImageIndex = 1
+      ShortCut = 16451
+    end
+    object EditSelectAll1: TEditSelectAll
+      Category = 'Edit'
+      Caption = 'Select &All'
+      Hint = 'Select All|Selects the entire document'
+      ShortCut = 16449
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 368
+    Top = 80
+    object Copy1: TMenuItem
+      Action = EditCopy1
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object SelectAll1: TMenuItem
+      Action = EditSelectAll1
+    end
   end
 end
