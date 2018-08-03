@@ -4,9 +4,9 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls,
-  Vcl.StdActns, System.Actions, Vcl.ActnList, Vcl.Menus;
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, Vcl.StdActns, System.Actions,
+  Vcl.ActnList, Vcl.Menus;
 
 type
   TSnipForm = class(TForm)
@@ -40,6 +40,7 @@ type
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
+    procedure MakeFiles;
   public
     { Public declarations }
     procedure Clear;
@@ -60,6 +61,7 @@ begin
     Self.edSnipLanguage.Items.Append(Self.edSnipLanguage.Text);
   if Self.edSnipCategory.Items.IndexOf(Self.edSnipCategory.Text) < 0 then
     Self.edSnipCategory.Items.Append(Self.edSnipCategory.Text);
+  MakeFiles;
 end;
 
 procedure TSnipForm.Clear;
@@ -84,6 +86,26 @@ begin
     'languages.txt', TEncoding.UTF8);
   Self.edSnipCategory.Items.SaveToFile(Util.GetPath('resources') +
     'categories.txt', TEncoding.UTF8);
+end;
+
+procedure TSnipForm.MakeFiles;
+var
+  I: Integer;
+  SL: TStringList;
+  S: string;
+begin
+  SL := TStringList.Create;
+  try
+    for I := 0 to Self.edSnipLanguage.Items.Count - 1 do
+    begin
+      S := Trim(LowerCase(Self.edSnipLanguage.Items[I]));
+      if (S <> '') and not FileExists(Util.GetPath('resources') + S + '.txt')
+      then
+        SL.SaveToFile(Util.GetPath('resources') + S + '.txt', TEncoding.UTF8);
+    end;
+  finally
+    FreeAndNil(SL);
+  end;
 end;
 
 end.

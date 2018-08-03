@@ -27,10 +27,12 @@ type
     SelectAll1: TMenuItem;
     procedure ToolButton1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure TreeViewClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure LoadTreeView;
   end;
 
 var
@@ -40,19 +42,85 @@ implementation
 
 {$R *.dfm}
 
-uses SnipBox.Snip, SnipBox.Util;
+uses IniFiles, SnipBox.Snip, SnipBox.Util;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   Randomize;
   ForceDirectories(Util.GetPath('resources'));
   ForceDirectories(Util.GetPath('resources/snippets'));
+  LoadTreeView;
+end;
+
+procedure TMainForm.LoadTreeView;
+var
+  ValuesList, SectionsList, LangList: TStrings;
+  Name: string;
+  I, J, K: Integer;
+  RootNode, LangNode: TTreeNode;
+  P: PString;
+begin
+  TreeView.Items.Clear;
+  LangList := TStringList.Create;
+  LangList.LoadFromFile(Util.GetPath('resources') + 'languages.txt',
+    TEncoding.UTF8);
+  try
+    for K := 0 to LangList.Count - 1 do
+    begin
+      with TIniFile.Create(Util.GetPath('resources') + LowerCase(LangList[K]) +
+        '.ini') do
+        try
+          SectionsList := TStringList.Create;
+          try
+            ReadSections(SectionsList);
+            ValuesList := TStringList.Create;
+            try
+              RootNode := TreeView.Items.Add(nil, Trim(LangList[K]));
+              for I := 0 to SectionsList.Count - 1 do
+              begin
+                ValuesList.Clear;
+                ReadSectionValues(SectionsList[I], ValuesList);
+                LangNode := TreeView.Items.AddChild(RootNode, SectionsList[I]);
+                for J := 0 to ValuesList.Count - 1 do
+                begin
+                  Name := ValuesList.Names[J];
+                  New(P);
+                  P^ := ValuesList.Values[Name];
+                  TreeView.Items.AddChildObject(LangNode, Name, P);
+                end;
+              end;
+            finally
+              FreeAndNil(ValuesList);
+            end;
+          finally
+            FreeAndNil(SectionsList);
+          end;
+        finally
+          Free;
+        end;
+    end;
+  finally
+    FreeAndNil(LangList);
+  end;
 end;
 
 procedure TMainForm.ToolButton1Click(Sender: TObject);
 begin
   SnipForm.Clear;
   Util.ShowForm(SnipForm);
+end;
+
+procedure TMainForm.TreeViewClick(Sender: TObject);
+var
+  FileName: string;
+begin
+  if TreeView.Selected.Level > 1 then
+  begin
+    FileName := Util.GetPath('resources/snippets') +
+      Trim(string(TreeView.Selected.Data^));
+    if FileExists(FileName) then
+      RichEdit.Lines.LoadFromFile(FileName, TEncoding.UTF8);
+  end;
 end;
 
 end.

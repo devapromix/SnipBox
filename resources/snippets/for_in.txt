@@ -1,0 +1,7 @@
+var
+  A: Array [1..6] of String;
+  I: String;
+…
+  for i in A do begin
+      Memo1.Lines.Add(i);
+  end;

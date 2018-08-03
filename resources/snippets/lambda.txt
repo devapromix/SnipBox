@@ -1,0 +1,12 @@
+var
+  Lambda: TFunc<Integer, Integer>;
+begin
+  Lambda:= function(ANumber: Integer) : Integer
+           begin
+             Result:= ANumber * ANumber;
+           end;
+
+
+   ShowMessage(Lambda(2).ToString());
+   ShowMessage(Lambda(4).ToString());
+end;

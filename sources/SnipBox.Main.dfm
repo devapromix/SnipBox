@@ -32,6 +32,7 @@ object MainForm: TMainForm
     Align = alLeft
     Indent = 19
     TabOrder = 0
+    OnClick = TreeViewClick
   end
   object RichEdit: TRichEdit
     Left = 196
@@ -51,8 +52,6 @@ object MainForm: TMainForm
     ScrollBars = ssBoth
     TabOrder = 1
     Zoom = 100
-    ExplicitLeft = 199
-    ExplicitTop = 34
   end
   object ToolBar: TToolBar
     Left = 0
