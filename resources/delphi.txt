@@ -1,0 +1,3 @@
+[New in Delphi]
+ForIn=for_in.txt
+Lambda=lambda.txt

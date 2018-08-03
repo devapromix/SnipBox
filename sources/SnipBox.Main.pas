@@ -68,7 +68,7 @@ begin
     for K := 0 to LangList.Count - 1 do
     begin
       with TIniFile.Create(Util.GetPath('resources') + LowerCase(LangList[K]) +
-        '.ini') do
+        '.txt') do
         try
           SectionsList := TStringList.Create;
           try
@@ -120,7 +120,9 @@ begin
       Trim(string(TreeView.Selected.Data^));
     if FileExists(FileName) then
       RichEdit.Lines.LoadFromFile(FileName, TEncoding.UTF8);
-  end;
+  end
+  else
+    RichEdit.Clear;
 end;
 
 end.
