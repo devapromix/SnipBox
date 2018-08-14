@@ -67,7 +67,7 @@ begin
   try
     for K := 0 to LangList.Count - 1 do
     begin
-      with TIniFile.Create(Util.GetPath('resources') + LowerCase(LangList[K]) +
+      with TMemIniFile.Create(Util.GetPath('resources') + LowerCase(LangList[K]) +
         '.txt') do
         try
           SectionsList := TStringList.Create;

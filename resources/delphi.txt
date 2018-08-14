@@ -1,3 +1,4 @@
 [New in Delphi]
 ForIn=for_in.txt
 Lambda=lambda.txt
+Join=join_str.txt
