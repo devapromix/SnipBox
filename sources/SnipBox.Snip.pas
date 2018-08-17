@@ -3,10 +3,8 @@
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls, Vcl.StdActns, System.Actions,
-  Vcl.ActnList, Vcl.Menus;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.ComCtrls, Vcl.StdActns, System.Actions, Vcl.ActnList, Vcl.Menus;
 
 type
   TSnipForm = class(TForm)
@@ -53,7 +51,8 @@ implementation
 
 {$R *.dfm}
 
-uses SnipBox.Util;
+uses
+SnipBox.Util;
 
 procedure TSnipForm.btOKClick(Sender: TObject);
 begin
@@ -74,20 +73,16 @@ end;
 
 procedure TSnipForm.FormCreate(Sender: TObject);
 begin
-  Self.edSnipLanguage.Items.LoadFromFile(Util.GetPath('resources') +
-    'languages.txt', TEncoding.UTF8);
-  Self.edSnipCategory.Items.LoadFromFile(Util.GetPath('resources') +
-    'categories.txt', TEncoding.UTF8);
+  Self.edSnipLanguage.Items.LoadFromFile(Util.GetPath('resources') + 'languages.txt', TEncoding.UTF8);
+  Self.edSnipCategory.Items.LoadFromFile(Util.GetPath('resources') + 'categories.txt', TEncoding.UTF8);
 end;
 
 procedure TSnipForm.FormDestroy(Sender: TObject);
 begin
   Self.edSnipLanguage.Items.WriteBOM := False;
-  Self.edSnipLanguage.Items.SaveToFile(Util.GetPath('resources') +
-    'languages.txt', TEncoding.UTF8);
+  Self.edSnipLanguage.Items.SaveToFile(Util.GetPath('resources') + 'languages.txt', TEncoding.UTF8);
   Self.edSnipCategory.Items.WriteBOM := False;
-  Self.edSnipCategory.Items.SaveToFile(Util.GetPath('resources') +
-    'categories.txt', TEncoding.UTF8);
+  Self.edSnipCategory.Items.SaveToFile(Util.GetPath('resources') + 'categories.txt', TEncoding.UTF8);
 end;
 
 procedure TSnipForm.MakeFiles;
@@ -102,8 +97,7 @@ begin
     for I := 0 to Self.edSnipLanguage.Items.Count - 1 do
     begin
       S := Trim(LowerCase(Self.edSnipLanguage.Items[I]));
-      if (S <> '') and not FileExists(Util.GetPath('resources') + S + '.txt')
-      then
+      if (S <> '') and not FileExists(Util.GetPath('resources') + S + '.txt') then
         SL.SaveToFile(Util.GetPath('resources') + S + '.txt', TEncoding.UTF8);
     end;
   finally

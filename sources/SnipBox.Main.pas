@@ -3,12 +3,26 @@
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, System.Generics.Collections,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls,
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  System.Generics.Collections,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
+  Vcl.ComCtrls,
   Vcl.ExtCtrls,
-  System.ImageList, Vcl.ImgList, Vcl.ToolWin, Vcl.Menus, System.Actions,
-  Vcl.ActnList, Vcl.StdActns;
+  System.ImageList,
+  Vcl.ImgList,
+  Vcl.ToolWin,
+  Vcl.Menus,
+  System.Actions,
+  Vcl.ActnList,
+  Vcl.StdActns;
 
 type
   TMainForm = class(TForm)
@@ -30,7 +44,7 @@ type
     procedure TreeViewClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
-    content: TList<string>;
+    Content: TList<string>;
   public
     { Public declarations }
     procedure LoadTreeView;
@@ -43,47 +57,48 @@ implementation
 
 {$R *.dfm}
 
-uses IniFiles, SnipBox.Snip, SnipBox.Util;
+uses
+  IniFiles,
+  SnipBox.Snip,
+  SnipBox.Util;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   Randomize;
   ForceDirectories(Util.GetPath('resources'));
   ForceDirectories(Util.GetPath('resources/snippets'));
-  content := TList<string>.Create();
-  content.Add('');
+  Content := TList<string>.Create();
+  Content.Add('');
   LoadTreeView;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
-  FreeAndNil(content);
+  FreeAndNil(Content);
 end;
 
 procedure TMainForm.LoadTreeView;
 var
-  ValuesList, SectionsList, LangList: TStrings;
   Name: string;
-  I, J, K, Idx: Integer;
+  ValuesList, SectionsList, LangList: TStrings;
+  I, J, L, Idx: Integer;
   RootNode, LangNode: TTreeNode;
-  P: PString;
+  // P: PString;
 begin
   TreeView.Items.Clear;
   LangList := TStringList.Create;
-  LangList.LoadFromFile(Util.GetPath('resources') + 'languages.txt',
-    TEncoding.UTF8);
+  LangList.LoadFromFile(Util.GetPath('resources') + 'languages.txt', TEncoding.UTF8);
   try
-    for K := 0 to LangList.Count - 1 do
+    for L := 0 to LangList.Count - 1 do
     begin
-      with TMemIniFile.Create(Util.GetPath('resources') + LowerCase(LangList[K]) +
-        '.txt', TEncoding.UTF8) do
+      with TMemIniFile.Create(Util.GetPath('resources') + LowerCase(LangList[L]) + '.txt', TEncoding.UTF8) do
         try
           SectionsList := TStringList.Create;
           try
             ReadSections(SectionsList);
             ValuesList := TStringList.Create;
             try
-              RootNode := TreeView.Items.Add(nil, Trim(LangList[K]));
+              RootNode := TreeView.Items.Add(nil, Trim(LangList[L]));
               for I := 0 to SectionsList.Count - 1 do
               begin
                 ValuesList.Clear;
@@ -92,10 +107,9 @@ begin
                 for J := 0 to ValuesList.Count - 1 do
                 begin
                   Name := ValuesList.Names[J];
-                  if FileExists(Util.GetPath('resources/snippets') +
-                    Trim(ValuesList.Values[Name])) then
+                  if FileExists(Util.GetPath('resources/snippets') + Trim(ValuesList.Values[Name])) then
                   begin
-                    Idx := content.Add(ValuesList.Values[Name]);
+                    Idx := Content.Add(ValuesList.Values[Name]);
                     TreeView.Items.AddChildObject(LangNode, Name, Pointer(Idx));
                   end
                   else
@@ -129,8 +143,7 @@ var
 begin
   if (TreeView.Selected.Level > 1) and Assigned(TreeView.Selected.Data) then
   begin
-    FileName := Util.GetPath('resources/snippets') +
-      Trim(content[integer(TreeView.Selected.Data)]);
+    FileName := Util.GetPath('resources/snippets') + Trim(Content[Integer(TreeView.Selected.Data)]);
     if FileExists(FileName) then
       RichEdit.Lines.LoadFromFile(FileName, TEncoding.UTF8);
   end
