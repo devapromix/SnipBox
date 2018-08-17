@@ -68,7 +68,7 @@ begin
     for K := 0 to LangList.Count - 1 do
     begin
       with TMemIniFile.Create(Util.GetPath('resources') + LowerCase(LangList[K]) +
-        '.txt') do
+        '.txt', TEncoding.UTF8) do
         try
           SectionsList := TStringList.Create;
           try

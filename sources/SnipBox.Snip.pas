@@ -82,8 +82,10 @@ end;
 
 procedure TSnipForm.FormDestroy(Sender: TObject);
 begin
+  Self.edSnipLanguage.Items.WriteBOM := False;
   Self.edSnipLanguage.Items.SaveToFile(Util.GetPath('resources') +
     'languages.txt', TEncoding.UTF8);
+  Self.edSnipCategory.Items.WriteBOM := False;
   Self.edSnipCategory.Items.SaveToFile(Util.GetPath('resources') +
     'categories.txt', TEncoding.UTF8);
 end;
@@ -95,6 +97,7 @@ var
   S: string;
 begin
   SL := TStringList.Create;
+  SL.WriteBOM := False;
   try
     for I := 0 to Self.edSnipLanguage.Items.Count - 1 do
     begin

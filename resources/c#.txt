@@ -1,2 +1,1 @@
-﻿[Category]
-WWW=demo.txt
+﻿
