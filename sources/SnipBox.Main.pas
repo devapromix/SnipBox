@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
+  System.Classes, Vcl.Graphics, System.Generics.Collections,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls,
   Vcl.ExtCtrls,
   System.ImageList, Vcl.ImgList, Vcl.ToolWin, Vcl.Menus, System.Actions,
@@ -28,8 +28,9 @@ type
     procedure ToolButton1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure TreeViewClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
-    { Private declarations }
+    content: TList<string>;
   public
     { Public declarations }
     procedure LoadTreeView;
@@ -49,14 +50,21 @@ begin
   Randomize;
   ForceDirectories(Util.GetPath('resources'));
   ForceDirectories(Util.GetPath('resources/snippets'));
+  content := TList<string>.Create();
+  content.Add('');
   LoadTreeView;
+end;
+
+procedure TMainForm.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(content);
 end;
 
 procedure TMainForm.LoadTreeView;
 var
   ValuesList, SectionsList, LangList: TStrings;
   Name: string;
-  I, J, K: Integer;
+  I, J, K, Idx: Integer;
   RootNode, LangNode: TTreeNode;
   P: PString;
 begin
@@ -84,9 +92,14 @@ begin
                 for J := 0 to ValuesList.Count - 1 do
                 begin
                   Name := ValuesList.Names[J];
-                  New(P);
-                  P^ := ValuesList.Values[Name];
-                  TreeView.Items.AddChildObject(LangNode, Name, P);
+                  if FileExists(Util.GetPath('resources/snippets') +
+                    Trim(ValuesList.Values[Name])) then
+                  begin
+                    Idx := content.Add(ValuesList.Values[Name]);
+                    TreeView.Items.AddChildObject(LangNode, Name, Pointer(Idx));
+                  end
+                  else
+                    TreeView.Items.AddChild(LangNode, Name);
                 end;
               end;
             finally
@@ -114,10 +127,10 @@ procedure TMainForm.TreeViewClick(Sender: TObject);
 var
   FileName: string;
 begin
-  if TreeView.Selected.Level > 1 then
+  if (TreeView.Selected.Level > 1) and Assigned(TreeView.Selected.Data) then
   begin
     FileName := Util.GetPath('resources/snippets') +
-      Trim(string(TreeView.Selected.Data^));
+      Trim(content[integer(TreeView.Selected.Data)]);
     if FileExists(FileName) then
       RichEdit.Lines.LoadFromFile(FileName, TEncoding.UTF8);
   end
