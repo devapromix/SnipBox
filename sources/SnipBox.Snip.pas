@@ -3,8 +3,22 @@
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  Vcl.Buttons, Vcl.ComCtrls, Vcl.StdActns, System.Actions, Vcl.ActnList, Vcl.Menus;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
+  Vcl.Buttons,
+  Vcl.ComCtrls,
+  Vcl.StdActns,
+  System.Actions,
+  Vcl.ActnList,
+  Vcl.Menus;
 
 type
   TSnipForm = class(TForm)
@@ -52,7 +66,7 @@ implementation
 {$R *.dfm}
 
 uses
-SnipBox.Util;
+  SnipBox.Util;
 
 procedure TSnipForm.btOKClick(Sender: TObject);
 begin

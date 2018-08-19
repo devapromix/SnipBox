@@ -1,5 +1,5 @@
 ﻿unit SnipBox.Main;
-
+
 interface
 
 uses
@@ -83,7 +83,6 @@ var
   ValuesList, SectionsList, LangList: TStrings;
   I, J, L, Idx: Integer;
   RootNode, LangNode: TTreeNode;
-  // P: PString;
 begin
   TreeView.Items.Clear;
   LangList := TStringList.Create;
@@ -152,3 +151,4 @@ begin
 end;
 
 end.
+
