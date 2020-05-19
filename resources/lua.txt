@@ -1,0 +1,2 @@
+[Love2d]
+Colors=colors.txt

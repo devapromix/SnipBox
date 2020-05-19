@@ -1,0 +1,13 @@
+COLORS = {
+	yellow 		= {237,201,81},
+	red 		= {204,51,63},
+	orange 		= {235,104,65},
+	offwhite 	= {231,231,231},
+	lightblue   = {105,188,188},
+	darkblue	= {0,160,176},
+	darkbrown   = {71,44,31},
+	lightbrown  = {106,75,60},
+	green       = {105,188,109},
+	
+	menu        = {0,0,0,200},
+}
